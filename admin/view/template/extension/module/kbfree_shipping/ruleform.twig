@@ -1,0 +1,162 @@
+{{ header }} 
+<script src="view/javascript/kbfree_shipping/velovalidation.js" type="text/javascript"></script>
+{{ column_left }} 
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="button" id="save_form_button" form="form-banner" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %} 
+                    <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+                {% endfor %} 
+            </ul>
+            {% if (add_success is defined) %} 
+                <div class="alert alert-success">
+                    <i class="fa fa-check-circle"></i> {{ add_success }} 
+                </div>
+            {% endif %} 
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+                </div>
+                <div class="panel-body">  
+                    {{ tab_common }} 
+                    <form  method="post" id="form-free-shipping" class="form-horizontal">
+                        <div class="form-group">
+                                <label class="col-sm-2 control-label" for="name"><font  color="#f00000" size="2px">*</font>{{ entry_name }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="name" class="form-control" />
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="col-sm-2 control-label" for="min-amount"><font  color="#f00000" size="2px">*</font><span data-toggle="tooltip" title="{{ hint_min_amount }}">{{ entry_min_amount }} {{ " (" ~ default_currency_value ~ ")" }}</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="min_amount" value="{{ min_amount }}" placeholder="{{ entry_min_amount }}" id="min_amount" class="form-control" />
+                                    <div style="color:#008B8B"> <div > <i class="fa fa-circle"></i>{{ default_min_amount_description }}</div> 
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="col-sm-2 control-label" for="min-weight"><font  color="#f00000" size="2px">*</font><span data-toggle="tooltip" title="{{ hint_min_weight }}">{{ entry_min_weight }} {{ " (" ~ default_weight_value ~ ")" }}</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="min_weight" value="{{ min_weight }}" placeholder="{{ entry_min_weight }}" id="min_weight" class="form-control" />
+                                    <div style="color:#008B8B"> <div > <i class="fa fa-circle"></i>{{ default_min_weight_description }}</div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="col-sm-2 control-label" for="priority"><font  color="#f00000" size="2px">*</font>{{ entry_priority }}</label> 
+                                <div class="col-sm-10">
+                                    <input type="text" name="priority" value="{{ priority }}" placeholder="{{ entry_priority }}" id="priority" class="form-control" />
+                                {% if (error_priority) %} 
+                                    <div class="text-danger">{{ error_priority }}</div>
+                                {% endif %} 
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="active">{{ entry_active }}</label>
+                            <div class="col-sm-10">
+                                <select name="active" id="active" class="form-control">
+                                    {% if (active == 1 ) %} 
+                                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                                        <option value="0">{{ text_disabled }}</option>
+                                    {% else %} 
+                                        <option value="1">{{ text_enabled }}</option>
+                                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                                    {% endif %} 
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="excluded_country"><span data-toggle="tooltip" title="{{ hint_country }}">{{ entry_country }}</span></label>
+                            <div class="col-sm-10">
+                                <select name="excluded_country[]" id="excluded_country" value="" class="form-control" multiple="">                                   
+                                    <option value=""> {{ text_none_country }}  </option>
+                                    {% if (countries is not empty) %} 
+                                    {% for country in countries %} 
+                                     {{ "<option value ='" ~ country['country_id'] ~ "'>" ~ country['name'] ~ "</option>" }}
+ {% endfor %}
+ {% else %} 
+ {{ '<option value="">Countries not available</option>' }} 
+ {% endif %}
+ 
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>      
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        
+        velovalidation.setErrorLanguage({
+            empty_field: '{{ error_field_empty }}',
+            valid_amount: '{{ error_text_amount_valid }}',
+            positive_amount: '{{ error_text_amount_positive }}',
+            number_field: '{{ error_text_priority_numeric }}',            
+        });
+        
+        $("#save_form_button").click(function() {
+            var error = false;
+            $(".has-error").removeClass("has-error");
+            $(".text-danger").remove();
+
+            var name_mandatory = velovalidation.checkMandatory($('#name'));
+            
+            var min_amount_mandatory = velovalidation.checkMandatory($('#min_amount'));
+            var min_amount_amount = velovalidation.checkAmount($('#min_amount'));
+            
+            var min_weight_mandatory = velovalidation.checkMandatory($('#min_weight'));
+            var min_weight_amount = velovalidation.checkAmount($('#min_weight'));
+            
+            var min_priority_numeric = velovalidation.isNumeric($('#priority'));
+            
+            if (name_mandatory != true) {
+                error = true;
+                $('#name').parent().parent().addClass('has-error');
+                $('#name').after('<div class="text-danger">' + name_mandatory + '</span>');
+            } 
+            if (min_amount_mandatory != true) {
+                error = true;
+                $('#min_amount').parent().parent().addClass('has-error');
+                $('#min_amount').after('<div class="text-danger">' + min_amount_mandatory + '</span>');
+            } 
+            if (min_amount_amount != true) {
+                error = true;
+                $('#min_amount').parent().parent().addClass('has-error');
+                $('#min_amount').after('<div class="text-danger">' + min_amount_amount + '</span>');
+            } 
+            if (min_weight_mandatory != true) {
+                error = true;
+                $('#min_weight').parent().parent().addClass('has-error');
+                $('#min_weight').after('<div class="text-danger">' + min_weight_mandatory + '</span>');
+            } 
+            if (min_weight_amount != true) {
+                error = true;
+                $('#min_weight').parent().parent().addClass('has-error');
+                $('#min_weight').after('<div class="text-danger">' + min_weight_amount + '</span>');
+            } 
+            if (min_priority_numeric != true) {
+                error = true;
+                $('#priority').parent().parent().addClass('has-error');
+                $('#priority').after('<div class="text-danger">' + min_priority_numeric + '</span>');
+            } 
+            if (error) {
+               return false;
+            } else {
+               $("#form-free-shipping").submit(); 
+            }
+        });
+    });
+</script>
+
+{{ footer }}
