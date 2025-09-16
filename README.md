@@ -1,4 +1,4 @@
-About OPencart Free Shipping Manager for Opencart3.x.x
+About Opencart Free Shipping Manager for Opencart3.x.x
 --------
 
 Using this extension, Opencart Online store merchant can offer free shipping to its customers without implementing any complicated code changes on the website. This extension offers a feature-rich Opencart Free Shipping Manager module which allows admin to set up rules and conditions for offering free-shipping on the store.
@@ -41,7 +41,7 @@ Our bug tracker is on GitHub. We encourage you to [create issues][create-issue] 
 Community forums
 --------
 
-You can discuss about the extension, help other merchants and get help, and contribute to improving the extension [project's discussions on GitHub][discussions].
+You can discuss about the extension, help other merchants and get help, and contribute to improve the extension [project's discussions on GitHub][discussions].
 
 Links
 --------
@@ -49,7 +49,7 @@ Links
 - [Extension homepage](https://www.knowband.com/opencart-free-shipping-manager/)
 - [Discussions](https://github.com/knowband-dev/opencart-free-shipping-manager/discussions)
 - [User Manual](https://www.knowband.com/blog/user-manual/opencart-free-shipping-manager-extension/)
-- [support]: https://www.knowband.com/helpdesk
+- [support] https://www.knowband.com/helpdesk
 
 
 [available-features]: https://www.knowband.com/opencart-free-shipping-manager/
