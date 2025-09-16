@@ -49,7 +49,7 @@ Links
 - [Extension homepage](https://www.knowband.com/opencart-free-shipping-manager/)
 - [Discussions](https://github.com/knowband-dev/opencart-free-shipping-manager/discussions)
 - [User Manual](https://www.knowband.com/blog/user-manual/opencart-free-shipping-manager-extension/)
-- [support] (https://www.knowband.com/helpdesk)
+- [support] (https://www.knowband.com/helpdesk) 
 
 
 [available-features]: https://www.knowband.com/opencart-free-shipping-manager/
