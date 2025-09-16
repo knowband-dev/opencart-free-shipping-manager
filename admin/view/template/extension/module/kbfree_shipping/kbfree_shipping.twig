@@ -1,0 +1,193 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="button" form="form-banner" id="save_form_button" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %} 
+                    <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+                {% endfor %} 
+            </ul>
+            {% if (success is defined) %} 
+                <div class="alert alert-success">
+                    <i class="fa fa-check-circle"></i> {{ success }} 
+                </div>
+            {% endif %} 
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ storeSwticher }} 
+                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ tab_module_configuration }}</h3>
+                </div>
+                <div class="panel-body" style="clear: both">
+                    {{ tab_common }} 
+                    <form action="{{ action }}" method="post" id="form-module_configuration" class="form-horizontal"> 
+                        <div class="tab-content">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="{{ hint_status }}">{{ entry_status }}</span></label>
+                                <div class="col-sm-10">
+                                    <select name="total_kbfree_shipping_status" id="total_kbfree_shipping_status" class="form-control">
+                                        {% if (total_kbfree_shipping_status) %} 
+                                            <option value="1" selected="selected">{{ text_enabled }}</option>
+                                            <option value="0">{{ text_disabled }}</option>
+                                        {% else %} 
+                                            <option value="1">{{ text_enabled }}</option>
+                                            <option value="0" selected="selected">{{ text_disabled }}</option>
+                                        {% endif %} 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-voucher-status">{{ voucher_status }}</label>
+                                <div class="col-sm-10">
+                                    <select name="total_kbfree_shipping_voucher_status" id="total_kbfree_shipping_voucher_status" class="form-control">
+                                        {% if (total_kbfree_shipping_voucher_status) %} 
+                                            <option value="1" selected="selected">{{ text_enabled }}</option>
+                                            <option value="0">{{ text_disabled }}</option>
+                                        {% else %} 
+                                            <option value="1">{{ text_enabled }}</option>
+                                            <option value="0" selected="selected">{{ text_disabled }}</option>
+                                        {% endif %} 
+                                    </select>
+                                    <div style="color:#008B8B"> <div > <i class="fa fa-circle"></i>{{ default_voucher_status_description }}</div>
+                                    </div>
+                                </div> 
+                            </div>
+<!--                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-shipping-list-status"><span data-toggle="tooltip" title="{# echo $hint_free_shipping_list; #}">{# echo $free_shipping_list; #}</span></label>
+                                <div class="col-sm-10">
+                                    <select name="kbfree_shipping_free_shipping_list" id="kbfree_shipping_free_shipping_list" class="form-control">
+                                        {# if ($kbfree_shipping_free_shipping_list) { #}
+                                            <option value="1" selected="selected">{# echo $text_enabled; #}</option>
+                                            <option value="0">{# echo $text_disabled; #}</option>
+                                        {# } else { #}
+                                            <option value="1">{# echo $text_enabled; #}</option>
+                                            <option value="0" selected="selected">{# echo $text_disabled; #}</option>
+                                          {# } #}
+                                    </select>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="background-color"><font  color="#f00000" size="2px">*</font><span data-toggle="tooltip" title="{{ hint_background_color }}">{{ background_color }}</span></label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                    <input type="text" data-hex="true" value="{{ total_kbfree_shipping_background_color }}" class="mColorPicker form-control" name="total_kbfree_shipping_backgroundcolor"  id="color_0" style="background-color: {{ total_kbfree_shipping_background_color }}; color: white;" readonly >
+                                    <span style="cursor:pointer;" id="icp_color_0" class="mColorPickerTrigger input-group-addon" data-mcolorpicker="true"><img src="{{ constant('HTTPS_SERVER') }}view/image/kbfree_shipping/color.png" style="border:0; margin:0 6 0 3px" align="absmiddle"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="font-color"><font  color="#f00000" size="2px">*</font><span data-toggle="tooltip" title="{{ hint_font_color }}">{{ font_color }}</span></label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                    <input type="text" data-hex="true" value="{{ total_kbfree_shipping_font_color }}" class="mColorPicker form-control" name="total_kbfree_shipping_fontcolor"  id="color_1" style="background-color: {{ total_kbfree_shipping_font_color }}; color: white;" readonly >
+                                    <span style="cursor:pointer;" id="icp_color_1" class="mColorPickerTrigger input-group-addon" data-mcolorpicker1="true"><img src="{{ constant('HTTPS_SERVER') }}view/image/kbfree_shipping/color.png" style="border:0; margin:0 6 0 3px" align="absmiddle"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="border-color"><font  color="#f00000" size="2px">*</font><span data-toggle="tooltip" title="{{ hint_border_color }}">{{ border_color }}</span></label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                    <input type="text" data-hex="true" value="{{ total_kbfree_shipping_border_color }}" class="mColorPicker form-control" name="total_kbfree_shipping_bordercolor"  id="color_2" style="background-color: {{ total_kbfree_shipping_border_color }}; color: white;" readonly >
+                                    <span style="cursor:pointer;" id="icp_color_2" class="mColorPickerTrigger input-group-addon" data-mcolorpicker2="true"><img src="{{ constant('HTTPS_SERVER') }}view/image/kbfree_shipping/color.png" style="border:0; margin:0 6 0 3px" align="absmiddle"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <label class="col-sm-2 control-label" for="input-width"><span data-toggle="tooltip" title="{{ hint_custom_css }}">{{ custom_css }}</span></label>
+                                <div class="col-sm-10">
+                                     <textarea type="text" name="total_kbfree_shipping_custom_css" value="{{ total_kbfree_shipping_custom_css }}" placeholder="{{ custom_css }}" id="total_kbfree_shipping_custom_css" class="form-control" >{{ total_kbfree_shipping_custom_css }}</textarea>
+                                     <div style="color:#008B8B"> <div > <i class="fa fa-circle"></i>{{ default_custom_css_description }}</div>
+                                     </div>
+                                </div>
+                            </div>
+                           </div>
+                     </form>
+                </div>       
+            </div>
+        </div>
+    </div>
+</div>
+<script src="view/javascript/kbfree_shipping/velovalidation.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        velovalidation.setErrorLanguage({
+            empty_field: '{{ error_field_empty }}',
+        });
+        
+        $("#save_form_button").click(function() {
+            var error = false;
+            $(".has-error").removeClass("has-error");
+            $(".text-danger").remove();
+            
+            $("#total_kbfree_shipping_background_color").each(function() {
+                var background_mandatory = velovalidation.checkMandatory($(this));           
+                if (background_mandatory != true) {
+                        error = true;
+                        $(this).parent().parent().addClass('has-error');
+                        $(this).after('<div class="text-danger">' + background_mandatory + '</span>');
+                    }
+            });
+            
+            $("#total_kbfree_shipping_font_color").each(function() {
+                var font_mandatory = velovalidation.checkMandatory($(this));           
+                if (font_mandatory != true) {
+                        error = true;
+                        $(this).parent().parent().addClass('has-error');
+                        $(this).after('<div class="text-danger">' + font_mandatory + '</span>');
+                    }
+            });
+
+            $("#total_kbfree_shipping_border_color").each(function() {
+                var border_mandatory = velovalidation.checkMandatory($(this));           
+                if (border_mandatory != true) {
+                        error = true;
+                        $(this).parent().parent().addClass('has-error');
+                        $(this).after('<div class="text-danger">' + border_mandatory + '</span>');
+                    }
+            });
+            
+            if (error) {
+               return false;
+            } else {
+               $("#form-module_configuration").submit(); 
+            }
+        });
+        
+        $(".mColorPicker").each(function() {
+        var rgb = $(this).css("backgroundColor");
+        rgb=rgb.replace(/[^\d,]/g, '').split(",");
+        var y = 2.99 * rgb[0] + 5.87 * rgb[1] + 1.14 * rgb[2];
+        if (y >= 1275) {
+            $(this).css('color','black');
+        } else {
+            $(this).css('color','white');
+        }
+    }); 
+    $(".mColorPicker1").each(function() {
+        var rgb = $(this).css("fontColor");
+        rgb=rgb.replace(/[^\d,]/g, '').split(",");
+        var y = 2.99 * rgb[0] + 5.87 * rgb[1] + 1.14 * rgb[2];
+        if (y >= 1275) {
+            $(this).css('color','black');
+        } else {
+            $(this).css('color','white');
+        }
+    }); 
+    $(".mColorPicker2").each(function() {
+        var rgb = $(this).css("borderColor");
+        rgb=rgb.replace(/[^\d,]/g, '').split(",");
+        var y = 2.99 * rgb[0] + 5.87 * rgb[1] + 1.14 * rgb[2];
+        if (y >= 1275) {
+            $(this).css('color','black');
+        } else {
+            $(this).css('color','white');
+        }
+    }); 
+});
+</script>     
+
+{{ footer }} 
